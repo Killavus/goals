@@ -1,2 +1,3 @@
 backend/node_modules
+backend/src/infrastructure/db/data
 frontend/node_modules

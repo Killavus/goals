@@ -7,7 +7,6 @@ export default class PointValue {
   }
 
   _validate () {
-    console.log(Number.isSafeInteger(this.number))
     if (this.unit.integerOnly && !Number.isSafeInteger(this.number)) {
       throw new Error(`Value must be an integer`)
     }

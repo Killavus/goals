@@ -10,10 +10,10 @@ export function dataPointMapper () {
         value: new Value({
           number: rawPoint.value,
           unit: new Unit({
-            name: 'Kilocalorie',
-            integerOnly: true,
-            positiveOnly: true,
-            shortName: 'kcal'
+            name: rawPoint.unit.name,
+            integerOnly: rawPoint.unit.integerOnly,
+            positiveOnly: rawPoint.unit.positiveOnly,
+            shortName: rawPoint.unit.shortName
           })
         }),
         timestamp: rawPoint.timestamp
@@ -24,8 +24,7 @@ export function dataPointMapper () {
         id: point.id,
         value: point.value.number,
         timestamp: point.timestamp,
-        unitName: point.value.unit.name,
-        unitShort: point.value.unit.shortName
+        unit: point.value.unit
       }
     }
   }

@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import configureStore from './store/configureStore';
+import {Provider} from 'react-redux';
+import {loadTracks} from './actions/trackActions';
+const store = configureStore();
+
+store.dispatch(loadTracks());
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+        <Provider store={store}>
+        <div className="container-fluid">
+          {this.props.children}
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+        </Provider>
     );
   }
 }

@@ -1,11 +1,10 @@
+import getTrack from '../../../tracking/queries/getTrack'
 import addPoint from '../../../tracking/services/addPoint'
 
 export default (req, res) => {
-  return addPoint(
-    req.params.key,
-    req.body.value,
-    req.body.unit
-  )
+  return getTrack(req.params.trackId).then((track) => {
+    addPoint(track, req.body.value)
+  })
     .then(() => {
       res.status(201).end()
     })

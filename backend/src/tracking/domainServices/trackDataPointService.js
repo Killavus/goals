@@ -17,11 +17,10 @@ export function trackDataPointService (generateId) {
     },
     pointsStreamKey () {
       return `points_${track.id}`
-    },
-    streamKey () {
-      return `track_${track.id}`
     }
   })
 }
+
+trackDataPointService.prototype.streamKey = (trackId) => `track_${trackId}`
 
 export default trackDataPointService(uuidGenerator)

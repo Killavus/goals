@@ -39,11 +39,15 @@ export function trackingDb (storagePath, dbApi) {
       )
   }
 
+  const parseData = (data) => data.length === 0 ? [] : JSON.parse(data)
+
   const readData = (key) =>
     dbApi.readFilePromise(storageFile(key), 'utf8')
       .then(
-        JSON.parse,
-        wrapError(`Failed to load datapoints stream with key ${key}`)
+        parseData,
+        (err) => err.code === 'ENOENT'
+          ? []
+          : wrapError(`Failed to load datapoints stream with key ${key}`)
       )
 
   return {

@@ -1,3 +1,5 @@
+import Promise from 'bluebird'
+
 import dataMapper from '../dataMappers/tracking/track'
 import fsAdapter from '../adapters/fileSystemStorage'
 
@@ -8,15 +10,22 @@ export function trackDb (adapter, dataMapper) {
   const serializeData = map(dataMapper.serialize)
 
   return {
-    load (key) {
-      return adapter.load(key)
-        .then(deserializePayload).then(first)
+    all () {
+      const filterFn = (streamName) => streamName.startsWith('track_')
+      return adapter.listStreams(filterFn)
+        .then((streamKeys) => Promise.map(streamKeys, adapter.load))
+        .then(map(deserializePayload))
+        .then(map(first))
     },
     create (key, track) {
       return adapter.overwrite(key, serializeData([track]))
     },
     destroy (key) {
       return adapter.destroy(key)
+    },
+    load (key) {
+      return adapter.load(key)
+        .then(deserializePayload).then(first)
     }
   }
 }

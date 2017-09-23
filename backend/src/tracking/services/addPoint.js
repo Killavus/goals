@@ -1,30 +1,17 @@
 import db from '../../infrastructure/db/tracking'
-import dataMapper from '../../infrastructure/dataMappers/tracking/dataPoint'
+import dataPointService from '../domainServices/trackDataPointService'
 import currentDate from '../../infrastructure/adapters/currentDate'
-import idGenerator from '../../infrastructure/adapters/uniqueIdentity'
 
-import DataPoint from '../entities/dataPoint'
-import PointValue from '../valueObjects/pointValue'
-import Unit from '../valueObjects/unit'
-
-export const addPoint = (db, currentDate, generateID, dataMapper) =>
-  (key, value, unit) => {
+export const addPoint = (db, currentDate) =>
+  (track, valueNumber) => {
+    const pointService = dataPointService(track)
     const now = currentDate()
-    const point = new DataPoint({
-      id: generateID(),
-      value: new PointValue({
-        number: value,
-        unit: new Unit({
-          integerOnly: true,
-          name: 'Kilocalorie',
-          positiveOnly: true,
-          shortName: 'kcal'
-        })
-      }),
+
+    const point = pointService.newDataPoint({
+      valueNumber,
       timestamp: new Date(now).toISOString()
     })
-
-    return db.append(key, [dataMapper.serialize(point)])
+    return db.append(pointService.pointsStreamKey(), [point])
   }
 
-export default addPoint(db, currentDate, idGenerator, dataMapper)
+export default addPoint(db, currentDate)

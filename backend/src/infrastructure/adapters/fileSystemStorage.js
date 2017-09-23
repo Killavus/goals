@@ -1,7 +1,7 @@
 import fs_ from 'fs'
 import path from 'path'
 import Promise from 'bluebird'
-import { curry } from 'ramda'
+import { curry, filter } from 'ramda'
 
 const fs = Promise.promisifyAll(fs_, { suffix: 'Thenable' })
 
@@ -54,6 +54,13 @@ export default function fileSystemStorage (dataPath, fileSystem = fs) {
     },
     overwrite (key, data) {
       return overwriteFile(storageFile(key), data)
+    },
+    listStreams (filterFn) {
+      const resolvedPath = path.resolve(__dirname, dataPath)
+
+      return fileSystem.readdirThenable(resolvedPath)
+        .then(filter(filterFn))
+        .catch(wrapError('Failed to list streams'))
     }
   }
 }

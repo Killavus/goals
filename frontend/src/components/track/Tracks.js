@@ -1,19 +1,19 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import TrackList from "./TrackList";
 import {bindActionCreators} from 'redux';
 import * as trackActions from '../../actions/trackActions';
+import TrackListRow from './TrackListRow';
+import {Table} from 'react-bootstrap';
 
 class Tracks extends Component {
   constructor(props, context){
     super(props,context);
   }
   render(){
-    console.log(this);
     return(
-        <div className="jumbotron">
-          <h1> CHUJ </h1>
-          <TrackList tracks={this.props.tracks}/>
+        <div>
+          {this.props.tracks.map(track =>
+            <TrackListRow key={track.id} track={track}/>)}
         </div>
     )
   }

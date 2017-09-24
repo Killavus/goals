@@ -5,6 +5,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import {Router,Route, IndexRoute, browserHistory} from 'react-router';
 import Tracks from './components/track/Tracks';
+import 'bootstrap/dist/css/bootstrap.css';
 
 
 

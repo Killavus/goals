@@ -1,4 +1,4 @@
-import unitMapper from '../dataMappers/tracking/unit'
+import unitMapper from './unit'
 import Track from '../../../tracking/entities/track'
 
 export function trackDataMapper (unitMapper) {

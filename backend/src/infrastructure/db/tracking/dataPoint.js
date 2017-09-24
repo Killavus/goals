@@ -1,5 +1,7 @@
-import dataMapper from '../dataMappers/tracking/dataPoint'
-import fsAdapter from '../adapters/fileSystemStorage'
+import path from 'path'
+
+import dataMapper from '../../dataMappers/tracking/dataPoint'
+import fsAdapter from '../../adapters/fileSystemStorage'
 
 import { map } from 'ramda'
 
@@ -18,4 +20,4 @@ export function dataPointDb (adapter, dataMapper) {
   }
 }
 
-export default dataPointDb(fsAdapter('./data'), dataMapper)
+export default dataPointDb(fsAdapter(path.resolve(__dirname, './data')), dataMapper)

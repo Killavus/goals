@@ -18,7 +18,7 @@ export default class Track {
       throw new Error('Track: Name is required')
     }
 
-    if (!Unit.isPrototypeOf(this.unit)) {
+    if (!(this.unit instanceof Unit)) {
       throw new Error('Track: Unit is invalid value')
     }
   }

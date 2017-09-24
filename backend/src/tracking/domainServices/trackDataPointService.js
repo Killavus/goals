@@ -21,6 +21,4 @@ export function trackDataPointService (generateId) {
   })
 }
 
-trackDataPointService.prototype.streamKey = (trackId) => `track_${trackId}`
-
 export default trackDataPointService(uuidGenerator)

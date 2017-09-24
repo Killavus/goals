@@ -1,4 +1,4 @@
-import db from '../../infrastructure/db/tracking'
+import db from '../../infrastructure/db/tracking/dataPoint'
 import dataPointService from '../domainServices/trackDataPointService'
 import currentDate from '../../infrastructure/adapters/currentDate'
 
@@ -12,6 +12,7 @@ export const addPoint = (db, currentDate) =>
       timestamp: new Date(now).toISOString()
     })
     return db.append(pointService.pointsStreamKey(), [point])
+      .then(() => point.id)
   }
 
 export default addPoint(db, currentDate)

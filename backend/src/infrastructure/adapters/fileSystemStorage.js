@@ -1,13 +1,12 @@
 import fs_ from 'fs'
 import path from 'path'
 import Promise from 'bluebird'
-import { curry, filter } from 'ramda'
+import { curry, filter, map } from 'ramda'
 
 const fs = Promise.promisifyAll(fs_, { suffix: 'Thenable' })
 
 export default function fileSystemStorage (dataPath, fileSystem = fs) {
   const storageFile = (key) => path.resolve(
-    __dirname,
     dataPath,
     `${key}.json`
   )
@@ -56,10 +55,9 @@ export default function fileSystemStorage (dataPath, fileSystem = fs) {
       return overwriteFile(storageFile(key), data)
     },
     listStreams (filterFn) {
-      const resolvedPath = path.resolve(__dirname, dataPath)
-
-      return fileSystem.readdirThenable(resolvedPath)
+      return fileSystem.readdirThenable(dataPath)
         .then(filter(filterFn))
+        .then(map((name) => name.replace('.json', '')))
         .catch(wrapError('Failed to list streams'))
     }
   }

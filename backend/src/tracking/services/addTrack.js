@@ -13,6 +13,7 @@ export const addTrack = (db, generateId) =>
     })
 
     return db.create(track)
+      .then(() => track.id)
   }
 
-export default addTrack(db)
+export default addTrack(db, uuidGenerator)

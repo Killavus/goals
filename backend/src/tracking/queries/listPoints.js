@@ -1,9 +1,9 @@
-import db from '../../infrastructure/db/tracking'
-import dataMapper from '../../infrastructure/dataMappers/tracking/dataPoint'
+import { curry } from 'ramda'
+import dataPointService from '../domainServices/trackDataPointService'
+import db from '../../infrastructure/db/tracking/dataPoint'
 
-export const listPoints = (db, dataMapper) =>
-  (key) => {
-    return db.load(key).then((points) => points.map(dataMapper.deserialize))
-  }
+export const listDataPoints = curry((db, track) =>
+  db.load(dataPointService(track).pointsStreamKey())
+)
 
-export default listPoints(db, dataMapper)
+export default listDataPoints(db)

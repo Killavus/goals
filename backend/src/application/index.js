@@ -1,4 +1,5 @@
 import bodyParser from 'body-parser'
+import cors from 'cors'
 import express from 'express'
 import logger from 'morgan'
 
@@ -12,6 +13,7 @@ export const makeServer = (userOptions) => {
   const options = { ...defaults, userOptions }
   const server = express()
 
+  server.use(cors())
   server.use(bodyParser.json())
   server.use(logger('tiny'))
   server.use('/tracking', tracking)

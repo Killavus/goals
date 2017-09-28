@@ -16,7 +16,7 @@ class App extends Component {
         <Provider store={store}>
           <div>
             <div className="container-fluid" style={{width: '65%', margin: '0 auto'}}>
-              <p> <Header/></p>
+              <div> <Header/></div>
             </div>
             <div className="container-fluid" style={{width: '50%', margin: '0 auto'}}>
               {this.props.children}

@@ -1,6 +1,6 @@
-import React, {PropTypes} from 'react';
-import {Link, IndexLink } from 'react-router';
-import {Navbar, Nav, NavItem, MenuItem} from 'react-bootstrap';
+import React from 'react';
+//import {Link, IndexLink } from 'react-router';
+import {Navbar, Nav, NavItem} from 'react-bootstrap';
 
 const Header = () => {
   return (
@@ -8,17 +8,17 @@ const Header = () => {
       <Navbar inverse collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="#">Goals</a>
+            <a href="/">Goals</a>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <NavItem eventKey={1} href="#"> Tracks</NavItem>
+            <NavItem eventKey={1} href="/"> Tracks</NavItem>
 
           </Nav>
           <Nav pullRight>
-            <NavItem eventKey={1} href="#"> </NavItem>
+            <NavItem eventKey={1} href="/"> </NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

@@ -1,6 +1,5 @@
 import React from 'react';
 import {TrackSummaryHeader, TrackGoalsSummary, TrackColorPanel, TrackSummaryChart} from "./TrackSummaryHeader";
-import {Row,Col} from 'react-bootstrap';
 import TableHeightHack from '../shared/tableHeightHack';
 
 

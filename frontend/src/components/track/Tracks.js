@@ -3,8 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as trackActions from '../../actions/trackActions';
 import TrackListRow from './TrackListRow';
-import {Button, Glyphicon} from 'react-bootstrap';
-import TrackForm from './TrackForm';
+
 
 class Tracks extends Component {
 
@@ -12,7 +11,6 @@ class Tracks extends Component {
     console.log(this.props.tracks);
     return(
         <div>
-          <TrackForm/>
           <div>
             {this.props.tracks.map(track =>
               <TrackListRow key={track.id} track={track}/>)}

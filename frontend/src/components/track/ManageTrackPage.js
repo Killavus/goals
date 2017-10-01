@@ -1,71 +1,47 @@
 import React from 'react';
-import {PageHeader,Form, FormGroup, Col, ControlLabel, FormControl} from 'react-bootstrap';
+import TrackForm from './TrackForm';
+import {connect} from 'react-redux';
 
 class ManageTrackPage extends React.Component {
+  constructor(context, props){
+    super(context, props);
 
+    this.state = {
+      track: Object.assign({}, this.props.track),
+      errors: {},
+    };
 
+    this.updateTrackState = this.updateTrackState.bind(this);
+  }
 
+  updateTrackState(event) {
+    const field = event.target.name;
+    console.log(event.target);
+    var track = Object.assign({}, this.state.track);
+    track[field] = event.target.value;
+    return this.setState({track: track});
+  }
 
   render() {
+    console.log('render w Manage',this.state);
     return(
+
         <div>
-          <PageHeader> Track </PageHeader>
-          <form>
-            <Form horizontal>
-
-              <FormGroup controlId="formHorizontalEmail">
-                <Col componentClass={ControlLabel} sm={2}>
-                  Name
-                </Col>
-                <Col sm={6}>
-                  <FormControl type="name" placeholder="Name" />
-                </Col>
-              </FormGroup>
-
-              <FormGroup controlId="formHorizontalColor">
-                <Col componentClass={ControlLabel} sm={2}>
-                  Color
-                </Col>
-                <Col sm={3}>
-                  <FormControl type="color" placeholder="color" />
-                </Col>
-                <Col sm={3}>
-                  <FormControl type="text" placeholder="#F0000" />
-                </Col>
-              </FormGroup>
-
-              <FormGroup controlId="formHorizontalControlsSelect">
-                <Col componentClass={ControlLabel} sm={2}>
-                  Unit
-                </Col>
-                <Col sm={5}>
-                  <FormControl componentClass="select" placeholder="select">
-                    <option value="select">...</option>
-                    <option value="other">...</option>
-                    <option value="other">...</option>
-                    <option value="other">...</option>
-                  </FormControl>
-                </Col>
-              </FormGroup>
-
-              <div id="unitForm" style={{display: 'block'}}>
-                <FormGroup controlId="formHorizontalUnitName">
-                  <Col componentClass={ControlLabel} sm={3}>
-                    Unit name
-                  </Col>
-                  <Col sm={7}>
-                    <FormControl type="unitName" placeholder="Unit Name" />
-                  </Col>
-                </FormGroup>
-              </div>
-
-            </Form>
-          </form>
+          <TrackForm
+            track = {this.state.track}
+            errors = {this.state.errors}
+            onChange = {this.updateTrackState}
+          />
         </div>
     )
   }
 }
 
+function mapStateToProps(state) {
+  var track = {name:'', color:'#000000', unit: {shortName:'', name:'', positiveOnly: true, integerOnly: true} };
+  return {
+    track: track
+  }
+}
 
-
-export default ManageTrackPage;
+export default connect(mapStateToProps, null)(ManageTrackPage);

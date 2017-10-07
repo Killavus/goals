@@ -27,6 +27,7 @@ class Tracks extends Component {
             </Button>
           </div>
           <div>
+            {console.log('div in tracks',this.props)}
             {this.props.tracks.map(track =>
               <TrackListRow key={track.id} track={track}/>)}
           </div>

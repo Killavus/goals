@@ -3,7 +3,7 @@ import Header from './components/common/Header'
 import './App.css';
 import configureStore from './store/configureStore';
 import {Provider} from 'react-redux';
-import {loadTracks} from './actions/trackActions';
+import {loadTracks, loadUnits} from './actions/trackActions';
 
 
 const store = configureStore();

@@ -6,6 +6,8 @@ function trackReducer(state = [], action){
       return action.tracks;
     case types.LOAD_UNITS_SUCCESS:
       return action.units;
+    case types.CREATE_TRACK_SUCCESS:
+      return state;
     default:
       return state;
   }

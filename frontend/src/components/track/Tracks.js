@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as trackActions from '../../actions/trackActions';
+import {loadTracks} from '../../actions/trackActions';
 import TrackListRow from './TrackListRow';
 import {Button, Glyphicon} from  'react-bootstrap';
 import {browserHistory} from 'react-router';
@@ -16,8 +15,11 @@ class Tracks extends Component {
     browserHistory.push('/track');
   }
 
+  componentDidMount(){
+    this.props.loadTracks();
+  }
+
   render(){
-    console.log(this.props.tracks);
     return(
         <div>
           <div style={{float:'right', marginBottom: '16px'  }}>
@@ -27,7 +29,6 @@ class Tracks extends Component {
             </Button>
           </div>
           <div>
-            {console.log('div in tracks',this.props)}
             {this.props.tracks.map(track =>
               <TrackListRow key={track.id} track={track}/>)}
           </div>
@@ -42,11 +43,8 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch){
-  return{
-    actions: bindActionCreators(trackActions, dispatch)
-  };
-}
+const mapDispatchToProps = { loadTracks }
+
 
 
 

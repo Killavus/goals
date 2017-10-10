@@ -11,13 +11,16 @@ const TrackForm = ({unit, units,track, errors, onSave, onChangeTrack, onChangeUn
       <form>
         <Form horizontal>
 
-          <FormGroup >
+          <FormGroup validationState={errors.trackName.validationState}>
             <Col componentClass={ControlLabel} sm={2}>
               Name
             </Col>
             <Col sm={6}>
               <FormControl type="name" placeholder="Name" name="name" value={track.name} onChange={onChangeTrack} />
+              <FormControl.Feedback />
+              {errors.trackName.validationText && <p style={{color: 'red'}}>{errors.trackName.validationText}</p>}
             </Col>
+
           </FormGroup>
           <FormGroup  >
             <Col componentClass={ControlLabel} sm={2}>
@@ -34,10 +37,11 @@ const TrackForm = ({unit, units,track, errors, onSave, onChangeTrack, onChangeUn
               <FormControl type="text"
                            value={track.color}
                            name="color"
-                           onChange={onChangeTrack} />
+                           onChange={onChangeTrack}
+                            disabled/>
             </Col>
           </FormGroup>
-          <FormGroup >
+          <FormGroup>
             <Col componentClass={ControlLabel} sm={2}>
               Unit
             </Col>
@@ -60,7 +64,7 @@ const TrackForm = ({unit, units,track, errors, onSave, onChangeTrack, onChangeUn
           </FormGroup>
           { unit.id === -1 ?
           <div>
-            <FormGroup controlId="formHorizontalUnitName" >
+            <FormGroup validationState={errors.unitName.validationState} controlId="formHorizontalUnitName" >
               <Col componentClass={ControlLabel} sm={2}>
                 Unit name
               </Col>
@@ -70,9 +74,11 @@ const TrackForm = ({unit, units,track, errors, onSave, onChangeTrack, onChangeUn
                              name="name"
                              value={unit.name}
                              onChange={onChangeUnit}/>
+                <FormControl.Feedback />
+                {errors.unitName.validationText && <p style={{color: 'red'}}>{errors.unitName.validationText}</p>}
               </Col>
             </FormGroup>
-            <FormGroup controlId="formHorizontalUnitShortName" >
+            <FormGroup  validationState={errors.unitShortName.validationState} controlId="formHorizontalUnitShortName" >
               <Col componentClass={ControlLabel} sm={2}>
               Short Unit Name
               </Col>
@@ -82,6 +88,8 @@ const TrackForm = ({unit, units,track, errors, onSave, onChangeTrack, onChangeUn
                              name="shortName"
                              value={unit.shortName}
                              onChange={onChangeUnit}/>
+                <FormControl.Feedback />
+                {errors.unitShortName.validationText && <p style={{color: 'red'}}>{errors.unitShortName.validationText}</p>}
               </Col>
             </FormGroup>
             <FormGroup>

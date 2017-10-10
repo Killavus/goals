@@ -13,7 +13,7 @@ class ManageTrackPage extends React.Component {
     this.state = {
       track: Object.assign({}, this.props.track),
       unit: Object.assign({}, this.props.unit),
-      errors: {}
+      errors: getEmptyErrorState()
     };
 
     this.updateTrackUnit = this.updateTrackUnit.bind(this);
@@ -24,7 +24,6 @@ class ManageTrackPage extends React.Component {
 
   updateTrackState(event) {
     const field = event.target.name;
-    console.log('update',event.target.name);
     var track = Object.assign({}, this.state.track);
     track[field] = event.target.value;
     return this.setState({track: track});
@@ -34,7 +33,6 @@ class ManageTrackPage extends React.Component {
   saveTrack(event){
     event.preventDefault();
     if(!this.trackFormIsValid()){
-      console.log(this.state.errors);
       return;
     }
 
@@ -44,7 +42,6 @@ class ManageTrackPage extends React.Component {
           toastr.success('Track Saved');
         })
         .catch(error => {
-          console.log(error);
           toastr.error(error);
           this.setState({saving: false});
         });
@@ -53,22 +50,28 @@ class ManageTrackPage extends React.Component {
 
   trackFormIsValid() {
     let formIsValid = true;
-    let errors = {};
-    console.log(this.state.unit)
+    let errors = getEmptyErrorState()
     if(this.state.track.name.length <3){
-      errors.trackName = 'Track name must be at least 3 characters.';
+      errors.trackName = {
+        validationText: 'Track name must be at least 3 characters.',
+        validationState: 'error'
+      }
       formIsValid = false;
     }
     if(this.state.unit.name.length <3){
-      errors.unitName = 'Unit name must be at least 3 characters.';
+      errors.unitName = {
+        validationText: 'Unit name must be at least 3 characters.',
+        validationState: 'error'
+      }
       formIsValid = false;
     }if(this.state.unit.shortName.length <1){
-      errors.unitShortName = 'Short name for unit must be at least 1 characters.';
+      errors.unitShortName = {
+        validationText: 'Short name must be at least 1 character.',
+        validationState: 'error'
+      }
       formIsValid = false;
     }
 
-    console.log(formIsValid);
-    console.log('rrorst', errors)
     this.setState({errors: errors});
     return formIsValid;
   }
@@ -123,6 +126,26 @@ ManageTrackPage.contextTypes = {
   router: PropTypes.object
 }
 
+
+const getEmptyErrorState = () => {
+  return({
+    unitName: {
+      validationState: null,
+      validationText: null
+    },
+    unitShortName: {
+      validationState: null,
+      validationText: null
+    },
+    trackName: {
+      validationState: null,
+      validationText: null
+    }
+  })
+}
+
+
+
 function mapStateToProps(state) {
   var unit = {id: -1, shortName:'', name:'', positiveOnly: false, integerOnly: false},
       track = {name:'', color:'#000000'};
@@ -132,6 +155,7 @@ function mapStateToProps(state) {
     unit: unit
   }
 }
+
 
 const mapDispatchToProps = (dispatch) => ({
   createTrack: (track)  => {return dispatch(createTrack(track))},

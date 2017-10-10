@@ -17,6 +17,7 @@ export function createTrackSuccess(tracks){
 
 
 export function loadTracks() {
+  console.log("z akcji")
   return function (dispatch) {
     return fetch('http://localhost:3000/tracking', {method: 'GET', mode: 'cors'}).then(function (response) {
       return response.json()

@@ -17,7 +17,6 @@ export function createTrackSuccess(tracks){
 
 
 export function loadTracks() {
-  console.log("z akcji")
   return function (dispatch) {
     return fetch('http://localhost:3000/tracking', {method: 'GET', mode: 'cors'}).then(function (response) {
       return response.json()
@@ -31,7 +30,6 @@ export function loadTracks() {
 }
 
 export function createTrack(track){
-    console.log('poczatek createTrack', track);
     return function (dispatch, getState) {
       return fetch("http://localhost:3000/tracking/tracks", {
         method: "post",
@@ -43,7 +41,6 @@ export function createTrack(track){
         body: JSON.stringify({'track': track})
       })
           .then( (response) => {
-           console.log('json repsone',response.json());
             dispatch(createTrackSuccess());
           }).catch(error => {
         throw(error);
@@ -52,18 +49,5 @@ export function createTrack(track){
 }
 
 
-// return function(dispatch, getState) {
-//   dispatch(beginAjaxCall());
-//   console.log("dupszot from action", course);
-//   return courseApi.saveCourse(course).then(savedCourse => {
-//     console.log("z then");
-//     course.id ? dispatch(updateCourseSuccess(savedCourse)) :
-//         dispatch(createCourseSuccess(savedCourse));
-//   }).catch(error => {
-//     console.log("wgl cos?");
-//     dispatch(ajaxCallError(error));
-//     throw(error);
-//   });
-// };
 
 

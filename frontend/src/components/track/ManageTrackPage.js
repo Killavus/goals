@@ -16,6 +16,7 @@ class ManageTrackPage extends React.Component {
       errors: getEmptyErrorState()
     };
 
+
     this.updateTrackUnit = this.updateTrackUnit.bind(this);
     this.updateTrackState = this.updateTrackState.bind(this);
     this.trackFormIsValid = this.trackFormIsValid.bind(this);
@@ -76,11 +77,14 @@ class ManageTrackPage extends React.Component {
     return formIsValid;
   }
 
+  componentDidMount(){
+    this.props.loadTracks();
+  }
 
   updateTrackUnit(event){
-    var unit = this.props.unit;
+    var unit = this.state.unit;
     if(event.target.name === 'unit-picker'){
-      unit = this.props.units[parseInt(event.target.value)];
+      unit = this.props.units[parseInt(event.target.value,10)];
     } else if(event.target.type === 'checkbox') {
       unit[event.target.name] = event.target.checked;
     } else {
@@ -117,6 +121,7 @@ const getUnitsFromListOfTracks = (tracks) =>{
           if(!rawUnits[track.unit.name])
             rawUnits[track.unit.name] = track.unit;
             rawUnits[track.unit.name].id = index;
+          return null;
           });
     map(rawUnits, (value) => {units[value.id] = value});
     return units;
@@ -151,15 +156,12 @@ function mapStateToProps(state) {
       track = {name:'', color:'#000000'};
   return {
     track: track,
-    units: getUnitsFromListOfTracks(state.tracks),
+    units: Object.assign({},getUnitsFromListOfTracks(state.tracks),{'-1' : unit}),
     unit: unit
   }
 }
 
 
-const mapDispatchToProps = (dispatch) => ({
-  createTrack: (track)  => {return dispatch(createTrack(track))},
-  loadTracks: () => {return dispatch(loadTracks)}
-})
+const mapDispatchToProps = { loadTracks, createTrack };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageTrackPage);

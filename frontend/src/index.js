@@ -6,7 +6,6 @@ import {Router, browserHistory} from 'react-router';
 import {Provider} from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
 import configureStore from './store/configureStore';
-import {loadTracks} from './actions/trackActions';
 import routes from './routes';
 import '../node_modules/toastr/build/toastr.min.css';
 

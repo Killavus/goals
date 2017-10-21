@@ -8,7 +8,6 @@ const TrackForm = ({unit, units,track, errors, onSave, onChangeTrack, onChangeUn
 
     <div>
       <PageHeader> Track </PageHeader>
-      <form>
         <Form horizontal>
 
           <FormGroup validationState={errors.trackName.validationState}>
@@ -52,7 +51,7 @@ const TrackForm = ({unit, units,track, errors, onSave, onChangeTrack, onChangeUn
                            onChange={onChangeUnit}>
                 <option value="-1"> Create Unit </option>
                 {map(units, (unit,index) =>
-                  <option key={index}
+                  unit.id !== -1 && <option key={index}
                           value={unit.id}>
                     {unit.name}
                   </option>
@@ -117,7 +116,6 @@ const TrackForm = ({unit, units,track, errors, onSave, onChangeTrack, onChangeUn
             </Button>
           </div>
         </Form>
-      </form>
     </div>
   )
 
